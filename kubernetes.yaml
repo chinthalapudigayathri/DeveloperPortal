@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: developerportal
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: developerportal
+  template:
+    metadata:
+      labels:
+        app: developerportal
+    spec:
+      containers:
+        - name: backend
+          image: gayathrichinthalapudi/developerportal:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: developerportal-service
+spec:
+  selector:
+    app: developerportal
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
